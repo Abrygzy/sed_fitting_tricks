@@ -99,4 +99,11 @@ class FastTruncatedEvenStudentTFreeDeg2(Prior):
 Although we have implemented an outlier model in the code, bad channels (e.g., strange values at the ends of a spectrum) 
 can still affect our fitting and lead to unexpected errors (e.g., wrong redshift).  
 
-*Possible solutions:* We can simply remove these channels before the fitting process.
+*Possible solutions:* We can simply remove these channels before fitting.
+
+Besides, FSPS imposes a minimal line-width on the model spectra:  
+https://github.com/dfm/python-fsps/issues/229  
+https://github.com/cconroy20/fsps/blob/master/src/add_nebular.f90#L45  
+If you are working on spatially resolved data, the observed linewidth can be much smaller than this minimal value, which can be problematic.
+
+*Possible solutions:* We can smooth the observed spectrum before fitting.
