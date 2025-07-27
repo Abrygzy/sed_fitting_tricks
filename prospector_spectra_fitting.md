@@ -1,7 +1,7 @@
 When fitting an optical spectrum using ```prospector```, we can follow the example provided in https://github.com/bd-j/exspect/blob/main/fitting/psb_params.py. 
 There are several points that need to be noticed compared to broadband SED fitting:
 
-- mask sky lines
+- mask sky lines [Hanuschik et al. (2003)](https://ui.adsabs.harvard.edu/abs/2003A%26A...407.1157H/abstract)
 - sedmodel.PolySpecModel() is used instead of sedmodel.SedModel().
 - spectral smoothing
 - continuum removal (for phot+spec fittings)
