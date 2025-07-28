@@ -1,11 +1,12 @@
 When fitting an optical spectrum using ```prospector```, we can follow the example provided in https://github.com/bd-j/exspect/blob/main/fitting/psb_params.py. 
 There are several points that need to be noticed compared to broadband SED fitting:
 
+- mask sky lines [Hanuschik et al. (2003)](https://ui.adsabs.harvard.edu/abs/2003A%26A...407.1157H/abstract)
 - sedmodel.PolySpecModel() is used instead of sedmodel.SedModel().
 - spectral smoothing
 - continuum removal (for phot+spec fittings)
-- emission line marginalization
-- adding an outlier model
+- emission line marginalization (2x faster, but gas properties will be unconstrained)
+- optional: adding an outlier model
 
 A detailed description of these settings can be found in [Johnson et al. (2021)](https://ui.adsabs.harvard.edu/abs/2021ApJS..254...22J).
 
@@ -96,7 +97,9 @@ class FastTruncatedEvenStudentTFreeDeg2(Prior):
 
 ### Q2. Redshift can not be fitted properly despite lots of emission lines
 
-Although we have implemented an outlier model in the code, bad channels (e.g., strange values at the ends of a spectrum) 
-can still affect our fitting and lead to unexpected errors (e.g., wrong redshift).  
+FSPS imposes a minimal line-width on the model spectra:  
+https://github.com/dfm/python-fsps/issues/229  
+https://github.com/cconroy20/fsps/blob/master/src/add_nebular.f90#L45  
+If you are working on spatially resolved data, the observed linewidth can be much narrower than this minimal value, which can be problematic.
 
-*Possible solutions:* We can simply remove these channels before the fitting process.
+*Possible solutions:* We can smooth the observed spectrum before fitting, or we can edit the ```add_nebular.f90``` file and recompile FSPS.
